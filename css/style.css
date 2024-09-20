@@ -1,0 +1,189 @@
+*{font-family: "Poppins", Helvetica, Arial, sans-serif;}
+#navbar,.banner,.list {background-color: #ebebeb;}
+.footer{background-color: #ebebeb;}
+.home_logo{width: 70px; height: 70px;}
+.list1{background-image: linear-gradient(to right, #ebebeb,white);}
+.list{background-image: linear-gradient(to right, #ebebeb,white) !important;}
+body {overflow-x: hidden;}
+.heading{color: #e6ae48;}
+#card:hover {transform: scale(1.050);box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;;}
+#card {transition: transform 0.5s;}
+.slider{background-color: #ebebeb;}
+.banner2 {
+    border-radius: 0.375rem;
+    background-image:url("/images/contact baanner1.jpeg");
+    min-height: 400px;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 0.375rem;
+}
+.container1 {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color:#fff; 
+    background-color: transparent;
+    border-radius: 8px;
+    /* box-shadow: 0 0 5px; */
+  }
+  h2{
+    text-align: center;
+    font-size: 40px;
+  }
+  .rating {
+    display: flex;
+    font: 16px;
+  }
+  .rating input[type="radio"] {
+    display: none;
+  }
+  .rating label {
+    cursor: pointer;
+    font-size: 35px;
+    color:gray;
+    
+  }
+  .rating label:before {
+    content: '\2605'; /* Unicode character for star */
+  }
+  .rating input[type="radio"]:checked ~ label {
+    color: #ffcc00;
+  }
+  button {
+    padding: 10px 20px;
+    background-color:#e6ae48;
+    color:#F8F9FA;
+    border: gray;
+    border-radius: 5px;
+    cursor: pointer;
+    font: 16px quicksand;
+  }
+  .buttn{background-color: #e6ae48;border-radius: 5px;}
+  .feature-section {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.feature-inner {
+    position: relative;
+}
+
+.image-element__wrap img {
+    width: 100%;
+    height: 277.6px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.feature-section:hover .image-element__wrap img {
+    transform: scale(1.1);
+}
+
+.feature-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: opacity 0.3s ease;
+}
+
+.feature-section:hover .feature-overlay {
+    opacity: 1;
+}
+
+.feature-wrap .title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.global-button .btn {
+    font-size: 1rem;
+}
+.detail_btn{background-color: #e6ae48;}
+.banner11 {
+  border-radius: 0.375rem;
+  background-image:url("/images/aboutus - Copy.png");
+  min-height: 400px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0.375rem;
+}
+.banner12 {
+  border-radius: 0.375rem;
+  background-image:url("/images/livingroom2.jpg");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0.375rem;
+}
+.banner13 {
+  border-radius: 0.375rem;
+  background-image:url("/images/kitchen2.jpg");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0.375rem;
+}
+.banner14 {
+  border-radius: 0.375rem;
+  background-image:url("/images/bedroom.jpg");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0.375rem;
+}
+.banner15 {
+  border-radius: 0.375rem;
+  background-image:url("/images/bathroom1.jpg");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0.375rem;
+}
+.banner16 {
+  border-radius: 0.375rem;
+  background-image:url("/images/banner11.jpg");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0.375rem;
+}
+.banner17 {
+  border-radius: 0.375rem;
+  background-image:url("/images/elegant.jpg");
+  min-height: 500px;
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 0.375rem;
+}
+
+
+
+
+
+
