@@ -9,16 +9,7 @@ body {overflow-x: hidden;}
 #card:hover {transform: scale(1.050);box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;;}
 #card {transition: transform 0.5s;}
 .slider{background-color: #ebebeb;}
-.banner2 {
-    border-radius: 0.375rem;
-    background-image:url("/images/contact baanner1.jpeg");
-    min-height: 400px;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 0.375rem;
-}
+.banner2{height: 600px;}
 .container1 {
     max-width: 600px;
     margin: 0 auto;
@@ -111,69 +102,9 @@ body {overflow-x: hidden;}
     font-size: 1rem;
 }
 .detail_btn{background-color: #e6ae48;}
-.banner11 {
-  border-radius: 0.375rem;
-  background-image:url("/images/aboutus - Copy.png");
-  min-height: 400px;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 0.375rem;
-}
-.banner12 {
-  border-radius: 0.375rem;
-  background-image:url("/images/livingroom2.jpg");
-  min-height: 500px;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 0.375rem;
-}
 .banner13 {
   border-radius: 0.375rem;
   background-image:url("/images/kitchen2.jpg");
-  min-height: 500px;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 0.375rem;
-}
-.banner14 {
-  border-radius: 0.375rem;
-  background-image:url("/images/bedroom.jpg");
-  min-height: 500px;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 0.375rem;
-}
-.banner15 {
-  border-radius: 0.375rem;
-  background-image:url("/images/bathroom1.jpg");
-  min-height: 500px;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 0.375rem;
-}
-.banner16 {
-  border-radius: 0.375rem;
-  background-image:url("/images/banner11.jpg");
-  min-height: 500px;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 0.375rem;
-}
-.banner17 {
-  border-radius: 0.375rem;
-  background-image:url("/images/elegant.jpg");
   min-height: 500px;
   background-attachment: fixed;
   background-position: center;
