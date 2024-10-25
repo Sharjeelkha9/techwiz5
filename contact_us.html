@@ -84,24 +84,24 @@
               <div class="container">
                 <div class="row">
                    <div class="col-lg-6 col-md-6 col-sm-12"> 
-                    <form>
+                    <form id="myform">
                       <div class="form-group">
                         <label class="my-2 fw-bold">Name:</label>
-                        <input type="text" required type="text" pattern="[A-Za-z]{3,}" placeholder="Enter your name" class="form-control" required  >
+                        <input type="text" id="name" required type="text" pattern="^[A-Za-z]+((\s|-)[A-Za-z]+)*$"       placeholder="Enter your name" class="form-control" required  >
                       </div>
                       <div class="form-group">
                         <label class="my-2 fw-bold">Email:</label>
-                        <input type="email" placeholder="Enter your email" class="form-control" required>
+                        <input type="email" id="email" placeholder="Enter your email" class="form-control" required>
                       </div>
                       <div class="form-group">
                         <label class="my-2 fw-bold">Phone:</label>
-                        <input type="number" placeholder="Enter your phone no." class="form-control" required >
+                        <input type="number" id="number" placeholder="Enter your phone no." class="form-control" required >
                       </div>
                       <div class="form-group">
                         <label class="my-2 fw-bold">Message:</label>
-                        <textarea class="form-control" placeholder="Message..." required></textarea>
+                        <textarea class="form-control" id="message"  placeholder="Message..." required></textarea>
                       </div>
-                      <button  class="btn btn-light my-3 w-25 text-light  " style="background-color:#e6ae48;color: white;border-radius: 16px;">Submit</button>
+                      <button type="submit" class="btn btn-light my-3 w-25 text-light  " style="background-color:#e6ae48;color: white;border-radius: 16px;">Submit</button>
                     </form>
         
                    </div>
@@ -126,7 +126,7 @@
                     <div class="col-md-4 col-lg-4 col-sm-12 a1">
                       <i class="fa fa-envelope " style="font-size: 24px;"></i>
                       <p class="fw-bold">Email</p>
-                      <p>homestyler@gmail.com</p>          
+                      <p>info@gmail.com</p>          
                     </div>
                   </div>
                  </div>
@@ -154,8 +154,8 @@
                       <li class="nav-item mb-2"><a href="furniture.html" class="nav-link p-0 text-body-secondary text-dark">PRODUCTS</a></li>
                       <li class="nav-item mb-2"><a href="sitemap.html" class="nav-link p-0 text-body-secondary text-dark">SITEMAP</a></li>
                       <li class="nav-item mb-2"><a href="feedback.html" class="nav-link p-0 text-body-secondary text-dark">FEEDBACK</a></li>
-                      <li class="nav-item mb-2"><a href="aboutus.html" class="nav-link p-0 text-body-secondary text-dark">ABOUT</a></li>
-                      <li class="nav-item mb-2"><a href="contact.html" class="nav-link p-0 text-body-secondary text-dark">CONTACT</a></li>
+                      <li class="nav-item mb-2"><a href="about_us.html" class="nav-link p-0 text-body-secondary text-dark">ABOUT</a></li>
+                      <li class="nav-item mb-2"><a href="contact_us.html" class="nav-link p-0 text-body-secondary text-dark">CONTACT</a></li>
                     </ul>
                   </div>
                   <div style="padding-right: 20px;" class="col-6 col-md-2 mb-3 mt-5">
@@ -170,7 +170,10 @@
                         Fell free to Contact us.
                     </p>
                     <p>
-                        <a class="text-decoration-none text-dark" href="#">+92-3123456789</a><br><br><a class="text-decoration-none text-dark" href="#"><span>iamkhansharjeel@gmial.com</span></a>
+                      <i class='fa fa-phone-square' style='font-size:24px'></i> &nbsp; 
+                      <a class="text-decoration-none text-dark" href="#">+92-3123456789</a><br><br>
+                      <i class='fa fa-envelope' style='font-size:24px'></i>  &nbsp;
+                      <a class="text-decoration-none text-dark" href="#"><span>info@gmail.com</span></a>
                     </p>
                   </div>
                       
@@ -182,9 +185,32 @@
               </footer>
         </div>
     </div>
+    
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="bootstrap/js/bootstrap.bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script>
+  document.getElementById("myForm").addEventListener("submit", function(event) {
+  event.preventDefault(); 
+
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const number = document.getElementById("number").value;
+  const message = document.getElementById("message").value;
+
+
+  const formData = {
+    name: name,
+    email: email,
+    number: number,
+    message: message
+  };
+
+  localStorage.setItem("formData", JSON.stringify(formData));
+
+});
+
+</script>
 </body>
 </html>
