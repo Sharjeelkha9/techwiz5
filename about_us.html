@@ -11,43 +11,44 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link href="css/style.css" rel="stylesheet">
   <style>
-    .height-100 {
-  height: 100vh
-}
-.h3{
-  color: white;
-}
-.card {
-  width: 100%;
-  border: none;
-  height: 400px;
-  max-width: 380px;
-  overflow: hidden;
-  position: relative;
-  display: flex;
-  cursor:pointer;
-  justify-content: center;
-  transition: all ease 0.4s;
-  box-shadow: 0px -3px 4px rgba(10, 10, 10, 0.09)
-}
-.card img {
-  transition: all ease 0.4s
-}
-.card:hover img {
-  margin-top: -60px
-}
-.card .content {
-  width: 100%;
-  position: absolute;
-  bottom: -40%;
-  margin-left: -8px;
-  transition: all ease 0.5s;
-  border-radius: 4px;
-  box-shadow: 0px -3px 4px rgba(10, 10, 10, 0.09)
-}
-.card:hover .content {
-  bottom: 0%
-}
+ .card {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+
+        .card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Scale card on hover */
+        .card:hover {
+            transform: scale(1.05);
+        }
+
+        /* Overlay for the name */
+        .card .name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            color: #fff;
+            font-size: 1.2em;
+            text-align: center;
+            padding: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Show name overlay on hover */
+        .card:hover .name {
+            opacity: 1;
+        }
 
   </style>
 </head>
@@ -89,6 +90,9 @@
                 <li><a class="navhover dropdown-item" href="elegant.html">Elegant Look Styles</a></li>
               </ul>
             </li>
+            <li class="nav-item">
+                <a class="navhover nav-link active text-dark" aria-current="page" href="designer.html">Designers</a>
+              </li> 
             <li class="nav-item">
               <a class="navhover nav-link active text-dark" aria-current="page" href="sitemap.html">Sitemap</a>
             </li> 
@@ -155,75 +159,37 @@
          <!-- services start  -->
          <h1 class="text-center mt-5 heading">Our Team</h1>
     <div class="container mt-5 mb-5">
-        <div class="row g-2"> 
-            <div class="col-md-3 mb-3 d-flex justify-content-center">
-                 <div class="card p-2"> 
-                    <div class="text-center">
-                         <img src="images/girl1.jpg" class="img-fluid" width="100%" />
-                         </div>
-                          <div class="content">
-                                  <div class="justify-content-evenly d-flex p-4">
-                                        <i class="fa fa-facebook text-light w-50" aria-hidden="true"></i>
-                                        <i class="fa fa-whatsapp text-light w-50" aria-hidden="true"></i>
-                                        <i class="fa fa-linkedin text-light w-50" aria-hidden="true"></i>
-                                        <i class="fa fa-instagram text-light w-50" aria-hidden="true"></i>
-                                  </div>
-                                </div>
-                            </div>
-                    </div>
-                    <div class="col-md-3 mb-3 d-flex justify-content-center">
-                        <div class="card p-2"> 
-                           <div class="text-center">
-                                <img src="images/girl2.jpg" class="img-fluid" width="100%" />
-                                </div>
-                                 <div class="content">                                    
-                                         <div class="justify-content-evenly d-flex p-4">
-                                               <i class="fa fa-facebook text-light w-50" aria-hidden="true"></i>
-                                               <i class="fa fa-whatsapp text-light w-50" aria-hidden="true"></i>
-                                               <i class="fa fa-linkedin text-light w-50" aria-hidden="true"></i>
-                                               <i class="fa fa-instagram text-light w-50" aria-hidden="true"></i>
-                                         </div>
-                                 </div>
-                                   </div>
-                           </div>
-                           <div class="col-md-3 mb-3 d-flex justify-content-center">
-                            <div class="card p-2"> 
-                               <div class="text-center">
-                                    <img src="images/boy1.jpg" class="img-fluid" width="100%" />
-                                    </div>
-                                     <div class="content">
-                                        <div class="d-flex justify-content-between align-items-center">
-                       </div>
-                       <div class="content">                                    
-                          <div class="justify-content-evenly d-flex p-4">
-                                <i class="fa fa-facebook text-light w-50" aria-hidden="true"></i>
-                                <i class="fa fa-whatsapp text-light w-50" aria-hidden="true"></i>
-                                <i class="fa fa-linkedin text-light w-50" aria-hidden="true"></i>
-                                <i class="fa fa-instagram text-light w-50" aria-hidden="true"></i>
-                          </div>
-                  </div>
-                           </div>
-                          </div>
-                          </div>
-                          <div class="col-md-3 mb-3 d-flex justify-content-center">
-                         <div class="card p-2"> 
-                        <div class="text-center">
-                       <img src="images/boy2.jpg" class="img-fluid" width="100%" />
-                      </div>
-                     <div class="content">
-                     <div class="d-flex justify-content-between align-items-center">
-                   </div>
-                   <div class="content">                                    
-                      <div class="justify-content-evenly d-flex p-4">
-                            <i class="fa fa-facebook text-light w-50" aria-hidden="true"></i>
-                            <i class="fa fa-whatsapp text-light w-50" aria-hidden="true"></i>
-                            <i class="fa fa-linkedin text-light w-50" aria-hidden="true"></i>
-                            <i class="fa fa-instagram text-light w-50" aria-hidden="true"></i>
-                      </div>
-              </div>
+        <div class="row d-flex justify-content-evenly"> 
+          <div class="col-6 col-md-4 col-lg-2 mb-4">
+            <div class="card">
+                <img src="https://img.freepik.com/free-photo/confident-young-man-walking-european-city-street_158595-4692.jpg?ga=GA1.1.610170037.1710935314&semt=ais_hybrid" alt="Team Member">
+                <div class="name">WASAY</div>
             </div>
         </div>
-    </div>                                 
+        <div class="col-6 col-md-4 col-lg-2 mb-4">
+            <div class="card">
+                <img src="https://img.freepik.com/free-photo/portrait-young-handsome-man-jacket-holding-laptop_171337-19839.jpg?ga=GA1.1.610170037.1710935314&semt=ais_hybrid" alt="Team Member">
+                <div class="name">AMAANULLAH</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4">
+            <div class="card">
+                <img src="https://img.freepik.com/free-photo/handsome-man-wearing-beige-coat_144627-23639.jpg?ga=GA1.1.610170037.1710935314&semt=ais_hybrid" alt="Team Member">
+                <div class="name">ATEEQ</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4">
+            <div class="card">
+                <img src="https://img.freepik.com/free-photo/man-portrait-posing-loft-modern-space_158595-5361.jpg?ga=GA1.1.610170037.1710935314&semt=ais_hybrid" alt="Team Member">
+                <div class="name">ZAIN</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2 mb-4">
+            <div class="card">
+                <img src="https://img.freepik.com/premium-photo/young-businessman-outdoor_53419-7081.jpg?ga=GA1.1.610170037.1710935314&semt=ais_hybrid" alt="Team Member">
+                <div class="name">SULEMAN</div>
+            </div>
+        </div>                                 
  </div>
 </div>
       </div>
