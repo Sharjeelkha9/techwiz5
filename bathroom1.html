@@ -74,16 +74,25 @@
     <div class="banner15 mb-4 ">
       <img src="images/bathroom1.jpg" class="w-100 img-fluid" alt="">
     </div>
-    <div class="px-3 py-2 border-bottom mb-3">
-        <div class="container-fluid  d-flex flex-wrap justify-content-center align-items-center">
-            <div class="col-12 col-lg-3 mb-2 mb-lg-0 me-lg-auto" role="search">
-                <div class="input-group">
-                    <input id="search-bar" type="text" class="form-control" placeholder="Search For Products"
-                        aria-label="Recipient's username" aria-describedby="button-addon2">      
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class="px-3 py-3 border-bottom mb-3">
+      <div class="container-fluid d-flex flex-wrap justify-content-between align-items-center">
+          <div class="col-sm-12 col-lg-3 mb-2 mb-lg-0 me-lg-auto" role="search">
+              <div class="input-group">
+                  <input id="search-bar" type="text" class="form-control" placeholder="Search For Products"
+                      aria-label="Recipient's username" aria-describedby="button-addon2">      
+              </div>
+          </div>
+          <div class="col-sm-12 col-lg-3">
+              <select id="sort-options" class="form-select">
+                  <option value="default">Sort By</option>
+                  <option value="price-high-to-low">Price High to Low</option>
+                  <option value="price-low-to-high">Price Low to High</option>
+                  <option value="a-to-z">A to Z</option>
+                  <option value="z-to-a">Z to A</option>
+              </select>
+          </div>
+      </div>
+  </div>
     <div class="col-lg-12 col-md-12 col-sm-12 text-center">
       <h1 class="mx-5 heading">BATHROOM</h1>
     </div>
@@ -200,176 +209,334 @@
    });
 });
 fetch('main.json')
-       .then(response => response.json())
-       .then(json => {
-           var i = 0;
-           var data ="";
-           for(var i in json.vanities)
-       {
-            data += `
-             <div class="col-lg-4 col-md-4 col-sm-12 mb-5 product" data-title="${json.vanities[i].name}">
-                            <figure class="feature-section">
-                                <div class="feature-inner">
-                                    <div class="image-element__wrap">
-                                        <img class=" img-fluid" src="${json.vanities[i].image}" alt="Bath Accessories">
+    .then(response => response.json())
+    .then(json => {
+        // Parse and prepare vanity products
+        let products = json.vanities.map(item => ({
+            ...item,
+            price: parseFloat(item.price.replace(/[^0-9.-]+/g, '')) // Ensure price is a number for sorting
+        }));
+
+        // Function to render vanity products
+        function renderProducts(products) {
+            let data = '';
+            products.forEach(product => {
+                data += `
+                <div class="col-lg-4 col-md-4 col-sm-12 mb-5 product" data-title="${product.name}">
+                    <figure class="feature-section">
+                        <div class="feature-inner">
+                            <div class="image-element__wrap">
+                                <img class="img-fluid" src="${product.image}" alt="${product.name}">
+                            </div>
+                            <figcaption class="feature-overlay">
+                                <a href="" class="link-promo"></a>
+                                <div class="feature-wrap">
+                                    <h2 class="title fs-3">${product.name}</h2>
+                                    <p class="fs-5">Rs. ${product.price}</p>
+                                    <div class="global-button">
+                                        <a href="detail4.html?id=${product.id}"><button class="buttn fw-bold">Shop Now</button></a>
                                     </div>
-                                    <figcaption class="feature-overlay">
-                                        <a href="" class="link-promo"></a>
-                                        <div class="feature-wrap">
-                                            <h2 class="title fs-3">${json.vanities[i].name}</h2>
-                                            <p class="fs-5">Rs. ${json.vanities[i].price}</p>
-                                            <div class="global-button">
-                                                <a href="detail4.html?id=${json.vanities[i].id}"><button class="buttn fw-bold">Shop Now</button></a>
-                                          </div>
-                                        </div>
-                                    </figcaption>
                                 </div>
-                            </figure>
+                            </figcaption>
                         </div>
-`;
-       }
+                    </figure>
+                </div>
+                `;
+            });
+            document.getElementById("data").innerHTML = data;
+        }
 
-       document.getElementById("data").innerHTML = data;
+        // Initial render of products
+        renderProducts(products);
 
-       });
+        // Sorting function based on dropdown selection
+        function sortProducts(option) {
+            let sortedProducts = [...products]; // Create a sorted copy
+
+            if (option === "price-high-to-low") {
+                sortedProducts.sort((a, b) => b.price - a.price);
+            } else if (option === "price-low-to-high") {
+                sortedProducts.sort((a, b) => a.price - b.price);
+            } else if (option === "a-to-z") {
+                sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (option === "z-to-a") {
+                sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+            }
+
+            renderProducts(sortedProducts); // Render sorted products
+        }
+
+        // Add event listener for sorting dropdown
+        document.getElementById("sort-options").addEventListener("change", function() {
+            sortProducts(this.value);
+        });
+    })
+    .catch(error => console.error("Error fetching data:", error));
 
 
-       fetch('main.json')
-       .then(response => response.json())
-       .then(json => {
-           var i = 0;
-           var data ="";
-           for(var i in json.shower)
-       {
-            data += `
-             <div class="col-lg-4 col-md-4 col-sm-12 mb-5 product" data-title="${json.shower[i].name}">
-                            <figure class="feature-section">
-                                <div class="feature-inner">
-                                    <div class="image-element__wrap">
-                                        <img class=" img-fluid" src="${json.shower[i].image}" alt="Bath Accessories">
+    fetch('main.json')
+    .then(response => response.json())
+    .then(json => {
+        // Parse and prepare shower products
+        let products = json.shower.map(item => ({
+            ...item,
+            price: parseFloat(item.price.replace(/[^0-9.-]+/g, '')) // Ensure price is a number for sorting
+        }));
+
+        // Function to render shower products
+        function renderProducts(products) {
+            let data = '';
+            products.forEach(product => {
+                data += `
+                <div class="col-lg-4 col-md-4 col-sm-12 mb-5 product" data-title="${product.name}">
+                    <figure class="feature-section">
+                        <div class="feature-inner">
+                            <div class="image-element__wrap">
+                                <img class="img-fluid" src="${product.image}" alt="${product.name}">
+                            </div>
+                            <figcaption class="feature-overlay">
+                                <a href="" class="link-promo"></a>
+                                <div class="feature-wrap">
+                                    <h2 class="title fs-3">${product.name}</h2>
+                                    <p class="fs-5">Rs. ${product.price}</p>
+                                    <div class="global-button">
+                                        <a href="detail4.html?id=${product.id}"><button class="buttn fw-bold">Shop Now</button></a>
                                     </div>
-                                    <figcaption class="feature-overlay">
-                                        <a href="" class="link-promo"></a>
-                                        <div class="feature-wrap">
-                                            <h2 class="title fs-3">${json.shower[i].name}</h2>
-                                            <p class="fs-5">Rs. ${json.shower[i].price}</p>
-                                            <div class="global-button">
-                                                <a href="detail4.html?id=${json.shower[i].id}"><button class="buttn fw-bold">Shop Now</button></a>
-                                          </div>
-                                        </div>
-                                    </figcaption>
                                 </div>
-                            </figure>
+                            </figcaption>
                         </div>
-`;
-       }
+                    </figure>
+                </div>
+                `;
+            });
+            document.getElementById("data1").innerHTML = data;
+        }
 
-       document.getElementById("data1").innerHTML = data;
+        // Initial render of products
+        renderProducts(products);
 
-       });
+        // Sorting function based on dropdown selection
+        function sortProducts(option) {
+            let sortedProducts = [...products]; // Create a sorted copy
 
-       fetch('main.json')
-       .then(response => response.json())
-       .then(json => {
-           var i = 0;
-           var data ="";
-           for(var i in json.toilet)
-       {
-            data += `
-             <div class="col-lg-4 col-md-4 col-sm-12 mb-5 product" data-title="${json.toilet[i].name}">
-                            <figure class="feature-section">
-                                <div class="feature-inner">
-                                    <div class="image-element__wrap">
-                                        <img class=" img-fluid" src="${json.toilet[i].image}" alt="Bath Accessories">
+            if (option === "price-high-to-low") {
+                sortedProducts.sort((a, b) => b.price - a.price);
+            } else if (option === "price-low-to-high") {
+                sortedProducts.sort((a, b) => a.price - b.price);
+            } else if (option === "a-to-z") {
+                sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (option === "z-to-a") {
+                sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+            }
+
+            renderProducts(sortedProducts); // Render sorted products
+        }
+
+        // Add event listener for sorting dropdown
+        document.getElementById("sort-options").addEventListener("change", function() {
+            sortProducts(this.value);
+        });
+    })
+    .catch(error => console.error("Error fetching data:", error));
+
+
+    fetch('main.json')
+    .then(response => response.json())
+    .then(json => {
+        // Parse and prepare toilet products
+        let products = json.toilet.map(item => ({
+            ...item,
+            price: parseFloat(item.price.replace(/[^0-9.-]+/g, '')) // Ensure price is a number for sorting
+        }));
+
+        // Function to render toilet products
+        function renderProducts(products) {
+            let data = '';
+            products.forEach(product => {
+                data += `
+                <div class="col-lg-4 col-md-4 col-sm-12 mb-5 product" data-title="${product.name}">
+                    <figure class="feature-section">
+                        <div class="feature-inner">
+                            <div class="image-element__wrap">
+                                <img class="img-fluid" src="${product.image}" alt="${product.name}">
+                            </div>
+                            <figcaption class="feature-overlay">
+                                <a href="" class="link-promo"></a>
+                                <div class="feature-wrap">
+                                    <h2 class="title fs-3">${product.name}</h2>
+                                    <p class="fs-5">Rs. ${product.price}</p>
+                                    <div class="global-button">
+                                        <a href="detail4.html?id=${product.id}"><button class="buttn fw-bold">Shop Now</button></a>
                                     </div>
-                                    <figcaption class="feature-overlay">
-                                        <a href="" class="link-promo"></a>
-                                        <div class="feature-wrap">
-                                            <h2 class="title fs-3">${json.toilet[i].name}</h2>
-                                            <p class="fs-5">Rs. ${json.toilet[i].price}</p>
-                                            <div class="global-button">
-                                                <a href="detail4.html?id=${json.toilet[i].id}"><button class="buttn fw-bold">Shop Now</button></a>
-                                          </div>
-                                        </div>
-                                    </figcaption>
                                 </div>
-                            </figure>
+                            </figcaption>
                         </div>
-`;
-       }
+                    </figure>
+                </div>
+                `;
+            });
+            document.getElementById("data2").innerHTML = data;
+        }
 
-       document.getElementById("data2").innerHTML = data;
+        // Initial render of products
+        renderProducts(products);
 
-       });
+        // Sorting function based on dropdown selection
+        function sortProducts(option) {
+            let sortedProducts = [...products]; // Create a sorted copy
+
+            if (option === "price-high-to-low") {
+                sortedProducts.sort((a, b) => b.price - a.price);
+            } else if (option === "price-low-to-high") {
+                sortedProducts.sort((a, b) => a.price - b.price);
+            } else if (option === "a-to-z") {
+                sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (option === "z-to-a") {
+                sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+            }
+
+            renderProducts(sortedProducts); // Render sorted products
+        }
+
+        // Add event listener for sorting dropdown
+        document.getElementById("sort-options").addEventListener("change", function() {
+            sortProducts(this.value);
+        });
+    })
+    .catch(error => console.error("Error fetching data:", error));
 
 
 
-       fetch('main.json')
-       .then(response => response.json())
-       .then(json => {
-           var i = 0;
-           var data ="";
-           for(var i in json.bathroomsinks)
-       {
-            data += `
-             <div class="col-lg-4 col-md-4 col-sm-12 mb-5 product" data-title="${json.bathroomsinks[i].name}">
-                            <figure class="feature-section">
-                                <div class="feature-inner">
-                                    <div class="image-element__wrap">
-                                        <img class=" img-fluid" src="${json.bathroomsinks[i].image}" alt="Bath Accessories">
+    fetch('main.json')
+    .then(response => response.json())
+    .then(json => {
+        // Parse and prepare bathroom sink products
+        let products = json.bathroomsinks.map(item => ({
+            ...item,
+            price: parseFloat(item.price.replace(/[^0-9.-]+/g, '')) // Ensure price is a number for sorting
+        }));
+
+        // Function to render bathroom sink products
+        function renderProducts(products) {
+            let data = '';
+            products.forEach(product => {
+                data += `
+                <div class="col-lg-4 col-md-4 col-sm-12 mb-5 product" data-title="${product.name}">
+                    <figure class="feature-section">
+                        <div class="feature-inner">
+                            <div class="image-element__wrap">
+                                <img class="img-fluid" src="${product.image}" alt="${product.name}">
+                            </div>
+                            <figcaption class="feature-overlay">
+                                <a href="" class="link-promo"></a>
+                                <div class="feature-wrap">
+                                    <h2 class="title fs-3">${product.name}</h2>
+                                    <p class="fs-5">Rs. ${product.price}</p>
+                                    <div class="global-button">
+                                        <a href="detail4.html?id=${product.id}"><button class="buttn fw-bold">Shop Now</button></a>
                                     </div>
-                                    <figcaption class="feature-overlay">
-                                        <a href="" class="link-promo"></a>
-                                        <div class="feature-wrap">
-                                            <h2 class="title fs-3">${json.bathroomsinks[i].name}</h2>
-                                            <p class="fs-5">Rs. ${json.bathroomsinks[i].price}</p>
-                                            <div class="global-button">
-                                                <a href="detail4.html?id=${json.bathroomsinks[i].id}"><button class="buttn fw-bold">Shop Now</button></a>
-                                          </div>
-                                        </div>
-                                    </figcaption>
                                 </div>
-                            </figure>
+                            </figcaption>
                         </div>
-`;
-       }
+                    </figure>
+                </div>
+                `;
+            });
+            document.getElementById("data3").innerHTML = data;
+        }
 
-       document.getElementById("data3").innerHTML = data;
+        // Initial render of products
+        renderProducts(products);
 
-       });
-       fetch('main.json')
-       .then(response => response.json())
-       .then(json => {
-           var i = 0;
-           var data ="";
-           for(var i in json.mirror1)
-       {
-            data += `
-             <div class="col-lg-4 col-md-4 col-sm-12 mb-5 product" data-title="${json.mirror1[i].name}">
-                            <figure class="feature-section">
-                                <div class="feature-inner">
-                                    <div class="image-element__wrap">
-                                        <img class=" img-fluid" src="${json.mirror1[i].image}" alt="Bath Accessories">
+        // Sorting function based on dropdown selection
+        function sortProducts(option) {
+            let sortedProducts = [...products]; // Create a sorted copy
+
+            if (option === "price-high-to-low") {
+                sortedProducts.sort((a, b) => b.price - a.price);
+            } else if (option === "price-low-to-high") {
+                sortedProducts.sort((a, b) => a.price - b.price);
+            } else if (option === "a-to-z") {
+                sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (option === "z-to-a") {
+                sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+            }
+
+            renderProducts(sortedProducts); // Render sorted products
+        }
+
+        // Add event listener for sorting dropdown
+        document.getElementById("sort-options").addEventListener("change", function() {
+            sortProducts(this.value);
+        });
+    })
+    .catch(error => console.error("Error fetching data:", error));
+
+    fetch('main.json')
+    .then(response => response.json())
+    .then(json => {
+        // Parse and prepare mirror products
+        let products = json.mirror1.map(item => ({
+            ...item,
+            price: parseFloat(item.price.replace(/[^0-9.-]+/g, '')) // Ensure price is a number for sorting
+        }));
+
+        // Function to render mirror products
+        function renderProducts(products) {
+            let data = '';
+            products.forEach(product => {
+                data += `
+                <div class="col-lg-4 col-md-4 col-sm-12 mb-5 product" data-title="${product.name}">
+                    <figure class="feature-section">
+                        <div class="feature-inner">
+                            <div class="image-element__wrap">
+                                <img class="img-fluid" src="${product.image}" alt="${product.name}">
+                            </div>
+                            <figcaption class="feature-overlay">
+                                <a href="" class="link-promo"></a>
+                                <div class="feature-wrap">
+                                    <h2 class="title fs-3">${product.name}</h2>
+                                    <p class="fs-5">Rs. ${product.price}</p>
+                                    <div class="global-button">
+                                        <a href="detail4.html?id=${product.id}"><button class="buttn fw-bold">Shop Now</button></a>
                                     </div>
-                                    <figcaption class="feature-overlay">
-                                        <a href="" class="link-promo"></a>
-                                        <div class="feature-wrap">
-                                            <h2 class="title fs-3">${json.mirror1[i].name}</h2>
-                                            <p class="fs-5">Rs. ${json.mirror1[i].price}</p>
-                                            <div class="global-button">
-                                                <a href="detail4.html?id=${json.mirror1[i].id}"><button class="buttn fw-bold">Shop Now</button></a>
-                                          </div>
-                                        </div>
-                                    </figcaption>
                                 </div>
-                            </figure>
+                            </figcaption>
                         </div>
-`;
-       }
+                    </figure>
+                </div>
+                `;
+            });
+            document.getElementById("data4").innerHTML = data;
+        }
 
-       document.getElementById("data4").innerHTML = data;
+        // Initial render of products
+        renderProducts(products);
 
-       });
+        // Sorting function based on dropdown selection
+        function sortProducts(option) {
+            let sortedProducts = [...products]; // Create a sorted copy
+
+            if (option === "price-high-to-low") {
+                sortedProducts.sort((a, b) => b.price - a.price);
+            } else if (option === "price-low-to-high") {
+                sortedProducts.sort((a, b) => a.price - b.price);
+            } else if (option === "a-to-z") {
+                sortedProducts.sort((a, b) => a.name.localeCompare(b.name));
+            } else if (option === "z-to-a") {
+                sortedProducts.sort((a, b) => b.name.localeCompare(a.name));
+            }
+
+            renderProducts(sortedProducts); // Render sorted products
+        }
+
+        // Add event listener for sorting dropdown
+        document.getElementById("sort-options").addEventListener("change", function() {
+            sortProducts(this.value);
+        });
+    })
+    .catch(error => console.error("Error fetching data:", error));
+
 
 
 

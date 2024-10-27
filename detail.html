@@ -157,8 +157,7 @@
 
 
 <script>
-
-
+   
 
 fetch('main.json')
        .then(response => response.json())
@@ -193,7 +192,6 @@ fetch('main.json')
        document.getElementById("data1").innerHTML = data;
 
        });
-
 
 fetch('main.json')
         .then(response => response.json())
@@ -233,7 +231,8 @@ fetch('main.json')
                     <p class="fs-3">Rs. ${json.sofaandcouches[i].price}</p>
                     <p class="fs-5 mb-3"><span class="badge detail_btn">In Stock</span></p>
                     
-                    <a href=""><button class="add-to-cart fs-4 btn-lg mb-4 btn-sm detail_btn" data-name = "${json.sofaandcouches[i].name}" data-price="${json.sofaandcouches[i].price}">Add to Cart</button></a>
+                    <a href=""><button onclick="showAlert()" class="add-to-cart fs-4 btn-lg mb-4 btn-sm detail_btn" data-name = "${json.sofaandcouches[i].name}" data-price="${json.sofaandcouches[i].price}">Add to Cart</button></a> 
+
                     
                     <ul class="nav nav-tabs" id="productDetailsTab" role="tablist">
                         <li class="nav-item" role="presentation">
@@ -279,7 +278,6 @@ fetch('main.json')
 
             document.getElementById("detail").innerHTML = data;
         });
-
 
         fetch('main.json')
         .then(response => response.json())
@@ -451,9 +449,6 @@ fetch('main.json')
             document.getElementById("detail2").innerHTML = data;
         });
 
-
-
-
         fetch('main.json')
         .then(response => response.json())
         .then(json => 
@@ -539,10 +534,6 @@ fetch('main.json')
             document.getElementById("detail3").innerHTML = data;
         });
 
-
-
-
-
         fetch('main.json')
         .then(response => response.json())
         .then(json => 
@@ -627,6 +618,8 @@ fetch('main.json')
 
             document.getElementById("detail4").innerHTML = data;
         });
+
+
 </script>
 
 
