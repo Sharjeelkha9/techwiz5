@@ -201,7 +201,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
 <script>
-function showMap(latitude, longitude) {
+ function showMap(latitude, longitude) {
             const map = L.map('map').setView([latitude, longitude], 15);
 
             // Using Esri's satellite imagery layer
@@ -210,24 +210,17 @@ function showMap(latitude, longitude) {
                 attribution: '&copy; <a href="https://www.esri.com/">Esri</a> &mdash; Esri, DeLorme, NAVTEQ, USGS, EPA, NPS'
             }).addTo(map);
 
-            L.marker([latitude, longitude]).addTo(map)
-                .bindPopup('Aptech SFC')
-                .openPopup();
+            // Create a marker at the specified location
+            const marker = L.marker([latitude, longitude]).addTo(map);
+            marker.bindPopup('Aptech SFC').openPopup();
         }
 
-        function getLocation() {
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition((position) => {
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    showMap(latitude, longitude);
-                }, (error) => {
-                    alert("Error getting location: " + error.message);
-                });
-            } 
-        }
-
-        window.onload = getLocation;
+        window.onload = function() {
+            // Set a default location (latitude and longitude)
+            const defaultLatitude = 37.7749;  // Example: San Francisco
+            const defaultLongitude = -122.4194; // Example: San Francisco
+            showMap(defaultLatitude, defaultLongitude);
+        };
 
 
   document.getElementById("myform").addEventListener("submit", function(event) {
