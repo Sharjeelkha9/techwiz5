@@ -6,6 +6,7 @@
     <title>Home Styler</title>
   <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="icon" type="image/x-icon" href="images/img14.png">
   <link href="css/style.css" rel="stylesheet">
 
@@ -62,6 +63,11 @@
                 </li> 
                 <li class="nav-item">
                   <a class="navhover nav-link active text-dark" aria-current="page" href="contact_us.html">Contact Us</a>
+                </li>
+                <li>
+                    <i type="icon" class="fa fa-shopping-cart" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight" style="cursor: pointer; font-size:35px; position:relative; margin-top: 10px;">
+                        <span id="cart-count" style="cursor: pointer; position:absolute; top:0; right:0; background:red; color:white; border-radius:50%; padding:2px 5px; font-size:14px;">0</span>
+                      </i>
                 </li>
                   </ul>
                 </li>
@@ -195,90 +201,144 @@ fetch('main.json')
        });
 
 
-        fetch('main.json')
-        .then(response => response.json())
-        .then(json => 
-        {
-            var i = 0;
-            var data ="";
+       fetch('main.json')
+    .then(response => response.json())
+    .then(json => {
+        var data = "";
+        var cart = {}; // Object to store items by name, with quantity and total price for each item
+        var total = 0;
+        var itemCount = 0; // Counter for total number of items in the cart (not just unique items)
 
-            var url = window.location.href;
-            var product_id1 = url.substring(url.lastIndexOf("=") + 1);
+        var url = window.location.href;
+        var product_id1 = url.substring(url.lastIndexOf("=") + 1);
 
-            for(i in json.cabinets)
-            {
-                if(product_id1 == json.cabinets[i].id)
-                {
-             data = `
-                   <div class="col-lg-6 col-md-6 col-sm-12 detail">
-                    <div class="card my-3 border-0">
-                    <img class="card-img-top detail img-fluid" src="${json.cabinets[i].image}" height="650px" alt="Title"/>
-                    </div>
-                </div>
-                <div id="offcanvasRight" class="offcanvas offcanvas-end" tabindex="-1" aria-labelledby="offcanvasRightLabel">
-                    <div class="offcanvas-header">
-                        <h5 id="offcanvasRightLabel">Added items</h5>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-content">
-                        <div id="cart-items"></div>
-                        <div id="cart-summary">
-                            <p>Total: Rs:<span id="cart-total">0</span></p>
-                           <a href="checkout.html"> <button class=" fs-5 btn btn-light btn-lg mb-4 btn-sm" id="checkout-button">Checkout</button></a>
+        // First, check if the product is a cabinet
+        for (let i in json.cabinets) {
+            if (product_id1 == json.cabinets[i].id) {
+                data = `
+                    <div class="col-lg-6 col-md-6 col-sm-12 detail">
+                        <div class="card my-3 border-0">
+                            <img class="card-img-top detail img-fluid" src="${json.cabinets[i].image}" height="650px" alt="Title"/>
                         </div>
                     </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 py-4">
-                    <h1 class="mb-3" id="data-name">${json.cabinets[i].name}</h1>
-                    <p class="fs-3">Rs. ${json.cabinets[i].price}</p>
-                    <p class="fs-5 mb-3"><span class="badge detail_btn">In Stock</span></p>
-                    
-                    <a href=""><button class="add-to-cart fs-4 btn-lg mb-4 btn-sm detail_btn" data-name = "${json.cabinets[i].name}" data-price="${json.cabinets[i].price}">Add to Cart</button></a>
-                    
-                    <ul class="nav nav-tabs" id="productDetailsTab" role="tablist">
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="specifications-tab" data-bs-toggle="tab" data-bs-target="#specifications" type="button" role="tab" aria-controls="specifications" aria-selected="false">Specifications</button>
-                        </li>
-                        <li class="nav-item" role="presentation">
-                            <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Reviews</button>
-                        </li>
-                    </ul>
-                    <div class="tab-content mt-3" id="productDetailsTabContent">
-                        <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
-                            <p class="fs-5">${json.cabinets[i].desc}</p>
+                    <div id="offcanvasRight" class="footer offcanvas offcanvas-end" tabindex="-1" aria-labelledby="offcanvasRightLabel">
+                        <div class="offcanvas-header">
+                            <h5 id="offcanvasRightLabel">Added items</h5>
+                            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                         </div>
-                        <div class="fs-5 tab-pane fade" id="specifications" role="tabpanel" aria-labelledby="specifications-tab">
-                            <ul>
-                                <li>Height:	36''</li>
-                                <li>Length:	78''</li>
-                                <li>Depth:	38''</li>
-                            </ul>
-                        </div>
-                        <div class="fs-5 tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
-                            <div class="review">
-                                <p><strong>John Doe</strong> - ★★★★☆</p>
-                                <p>The controls are great, but the catalog can be clunky to navigate.</p>
-                            </div>
-                            <div class="review">
-                                <p><strong>Jane Smith</strong> - ★★★☆☆</p>
-                                <p>Easy to use and the photorealistic renderings are beautiful, plus it's free.</p>
-                            </div>
-                            <div class="review">
-                                <p><strong>Cheryl S.Verified Buyer</strong> - ★★★☆☆</p>
-                                <p>Perfect for walkthrough videos, but rendering 3D footage can take a long time.</p>
+                        <div class="offcanvas-content">
+                            <div id="cart-items"></div>
+                            <div id="cart-summary">
+                                <p>Total: Rs.<span id="cart-total">0</span></p>
                             </div>
                         </div>
                     </div>
-                </div>
-`;
-             }
+                    <div class="col-lg-6 col-md-6 col-sm-12 py-4">
+                        <h1 class="mb-3" id="data-name">${json.cabinets[i].name}</h1>
+                        <p class="fs-3">Rs. ${json.cabinets[i].price}</p>
+                        <p class="fs-5 mb-3"><span class="badge detail_btn">In Stock</span></p>
+                        <button class="add-to-cart fs-4 btn-lg mb-4 btn-sm detail_btn" data-name="${json.cabinets[i].name}" data-price="${json.cabinets[i].price}">Add to Cart</button>
+                        <ul class="nav nav-tabs" id="productDetailsTab" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Description</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="specifications-tab" data-bs-toggle="tab" data-bs-target="#specifications" type="button" role="tab" aria-controls="specifications" aria-selected="false">Specifications</button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="reviews-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab" aria-controls="reviews" aria-selected="false">Reviews</button>
+                            </li>
+                        </ul>
+                        <div class="tab-content mt-3" id="productDetailsTabContent">
+                            <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                                <p class="fs-5">${json.cabinets[i].desc}</p>
+                            </div>
+                            <div class="fs-5 tab-pane fade" id="specifications" role="tabpanel" aria-labelledby="specifications-tab">
+                                <ul>
+                                    <li>Height: 36''</li>
+                                    <li>Length: 78''</li>
+                                    <li>Depth: 38''</li>
+                                </ul>
+                            </div>
+                            <div class="fs-5 tab-pane fade" id="reviews" role="tabpanel" aria-labelledby="reviews-tab">
+                                <div class="review">
+                                    <p><strong>John Doe</strong> - ★★★★☆</p>
+                                    <p>The controls are great, but the catalog can be clunky to navigate.</p>
+                                </div>
+                                <div class="review">
+                                    <p><strong>Jane Smith</strong> - ★★★☆☆</p>
+                                    <p>Easy to use and the photorealistic renderings are beautiful, plus it's free.</p>
+                                </div>
+                                <div class="review">
+                                    <p><strong>Cheryl S.Verified Buyer</strong> - ★★★☆☆</p>
+                                    <p>Perfect for walkthrough videos, but rendering 3D footage can take a long time.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                break; // Exit the loop if the product is found
+            }
+        }
+
+        // Display the cabinet details
+        document.getElementById("detail5").innerHTML = data;
+
+        // Function to update the cart display in the off-canvas
+        function updateCartDisplay() {
+            const cartItemsDiv = document.getElementById("cart-items");
+            cartItemsDiv.innerHTML = ""; // Clear the cart display
+            for (const [itemName, itemDetails] of Object.entries(cart)) {
+                cartItemsDiv.innerHTML += `
+                    <div class="cart-item">
+                        <p>${itemName} - Rs.${itemDetails.price} x ${itemDetails.quantity} = Rs.${itemDetails.totalPrice}</p>
+                        <button class="remove-item btn buttn fs-4 btn-lg mb-4 btn-sm detail_btn" data-name="${itemName}">Remove</button>
+                    </div>`;
+            }
+            document.getElementById("cart-total").innerText = total; // Display total without currency formatting
+        }
+
+        // Add event listener for the "Add to Cart" button
+        document.querySelector(".add-to-cart").addEventListener("click", function () {
+            const name = this.getAttribute("data-name");
+            const price = parseFloat(this.getAttribute("data-price")); // Ensure price is a float
+
+            if (cart[name]) {
+                cart[name].quantity += 1;
+                cart[name].totalPrice += price;
+            } else {
+                cart[name] = { quantity: 1, totalPrice: price, price };
             }
 
-            document.getElementById("detail5").innerHTML = data;
+            itemCount++; // Increment total item count in cart icon
+            total += price;
+            updateCartDisplay();
         });
+
+        // Function to remove an item from the cart
+        function removeFromCart(name) {
+            if (cart[name]) {
+                total -= cart[name].price; // Decrease total by item's price
+                cart[name].totalPrice -= cart[name].price;
+                cart[name].quantity -= 1;
+                itemCount--; // Decrement total item count in cart icon
+
+                if (cart[name].quantity === 0) {
+                    delete cart[name]; // Remove item from cart if quantity is zero
+                }
+
+                updateCartDisplay();
+            }
+        }
+
+        // Add event listener to dynamically created remove buttons
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("remove-item")) {
+                const name = e.target.getAttribute("data-name");
+                removeFromCart(name);
+            }
+        });
+    });
 
 
         fetch('main.json')
@@ -317,9 +377,8 @@ fetch('main.json')
                 <div class="col-lg-6 col-md-6 col-sm-12 py-4">
                     <h1 class="mb-3" id="data-name">${json.countertop[i].name}</h1>
                     <p class="fs-3">Rs. ${json.countertop[i].price}</p>
-                    <p class="fs-5 mb-3"><span class="badge detail_btn">In Stock</span></p>
                     
-                    <a href=""><button class="add-to-cart fs-4 btn-lg mb-4 btn-sm detail_btn" data-name = "${json.countertop[i].name}" data-price="${json.countertop[i].price}">Add to Cart</button></a>
+                     <a href=""><button class="add-to-cart fs-4 btn-lg mb-4 btn-sm detail_btn" data-name = "${json.countertop[i].name}" data-price="${json.countertop[i].price}">Add to Cart</button></a>
                     
                     <ul class="nav nav-tabs" id="productDetailsTab" role="tablist">
                         <li class="nav-item" role="presentation">
@@ -404,7 +463,6 @@ fetch('main.json')
                 <div class="col-lg-6 col-md-6 col-sm-12 py-4">
                     <h1 class="mb-3" id="data-name">${json.faucets[i].name}</h1>
                     <p class="fs-3">Rs. ${json.faucets[i].price}</p>
-                    <p class="fs-5 mb-3"><span class="badge detail_btn">In Stock</span></p>
                     
                     <a href=""><button class="add-to-cart fs-4 btn-lg mb-4 btn-sm detail_btn" data-name = "${json.faucets[i].name}" data-price="${json.faucets[i].price}">Add to Cart</button></a>
                     
@@ -492,7 +550,6 @@ fetch('main.json')
                 <div class="col-lg-6 col-md-6 col-sm-12 py-4">
                     <h1 class="mb-3" id="data-name">${json.carts[i].name}</h1>
                     <p class="fs-3">Rs. ${json.carts[i].price}</p>
-                    <p class="fs-5 mb-3"><span class="badge detail_btn">In Stock</span></p>
                     
                     <a href=""><button class="add-to-cart fs-4 btn-lg mb-4 btn-sm detail_btn" data-name = "${json.carts[i].name}" data-price="${json.carts[i].price}">Add to Cart</button></a>
                     
@@ -579,8 +636,6 @@ fetch('main.json')
                 <div class="col-lg-6 col-md-6 col-sm-12 py-4">
                     <h1 class="mb-3" id="data-name">${json.splashes[i].name}</h1>
                     <p class="fs-3">Rs. ${json.splashes[i].price}</p>
-                    <p class="fs-5 mb-3"><span class="badge detail_btn">In Stock</span></p>
-                    
                     <a href=""><button class="add-to-cart fs-4 btn-lg mb-4 btn-sm detail_btn" data-name = "${json.splashes[i].name}" data-price="${json.splashes[i].price}">Add to Cart</button></a>
                     
                     <ul class="nav nav-tabs" id="productDetailsTab" role="tablist">
